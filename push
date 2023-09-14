@@ -1,0 +1,9 @@
+#!/bin/bash
+git pull
+echo "Enter file name"
+read y
+echo "Enter commit"
+read x
+git add ${y}
+git commit -m "${x}"
+git push
