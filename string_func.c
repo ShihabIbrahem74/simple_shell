@@ -33,13 +33,13 @@ int _strlen(char *s)
  * letter_counter - count how many c in str
  * Description: for alx project simple shell
  * @c: c is a special character
- * @str: is the string 
+ * @str: is the string
  * Return: number of char in string
  */
 int letter_counter(char *str, char c)
 {
 	int counter = 0;
-	
+
 	while (*str != '\0')
 	{
 		if (*(str + 1) == c && *str != c)
@@ -83,30 +83,30 @@ return (*s1 - *s2);
  */
 char *itos(int pid)
 {
-    int length, temp = pid;
-    char *str;
-    
-    if (pid == 0)
-    length = 1;
-    else
-    {
-        for (length = 0; temp != 0; length++)
-            temp = temp / 10;
-    }
-    length++;
-    str = malloc(sizeof(char) * length);
-    if (!str)
-    {
-        free(str);
-        return (NULL);
-    }
-    length--;
-    str[length] = '\0';
-    while (length != 0)
-    {
-        length--;
-        str[length] = pid % 10 + '0';
-        pid = pid / 10;
-    }
-    return (str);
+	int length, temp = pid;
+	char *str;
+
+	if (pid == 0)
+	length = 1;
+	else
+	{
+		for (length = 0; temp != 0; length++)
+			temp = temp / 10;
+	}
+	length++;
+	str = malloc(sizeof(char) * length);
+	if (!str)
+	{
+		free(str);
+		return (NULL);
+	}
+	length--;
+	str[length] = '\0';
+	while (length != 0)
+	{
+		length--;
+		str[length] = pid % 10 + '0';
+		pid = pid / 10;
+	}
+	return (str);
 }

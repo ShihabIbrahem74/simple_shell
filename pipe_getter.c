@@ -7,16 +7,16 @@
 
 char **pipe_getter()
 {
-    int counter, flag = 0;
-    size_t chara = 0;
-    ssize_t bytes;
-    char buffer[2048], *data = NULL, **commands = NULL;
+	int counter, flag = 0;
+	size_t chara = 0;
+	ssize_t bytes;
+	char buffer[2048], *data = NULL, **commands = NULL;
 
-    bytes = read(STDIN_FILENO, buffer, 2048);
+	bytes = read(STDIN_FILENO, buffer, 2048);
 	while (bytes > 0)
 	{
 		chara += bytes;
-        bytes = read(STDIN_FILENO, buffer, 2048);
+		bytes = read(STDIN_FILENO, buffer, 2048);
 	}
 	if (bytes == -1)
 	{
@@ -29,13 +29,13 @@ char **pipe_getter()
 		buffer[chara - 1] = '\0';
 	for (counter = 0; buffer[counter]; counter++)
 	{
-        if (buffer[counter] != ' ' && buffer[counter] != '\n'
-        && buffer[counter] != '\t' && buffer[counter] != '\r' 
-        && buffer[counter] != '\a')
+		if (buffer[counter] != ' ' && buffer[counter] != '\n'
+		&& buffer[counter] != '\t' && buffer[counter] != '\r'
+		&& buffer[counter] != '\a')
 		flag = 1;
 	}
 	if (flag == 0)
-    return (NULL);
+	return (NULL);
 	chara = _strlen(buffer);
 	data = (char *)malloc(sizeof(char) *(chara + 1));
 	if (data)

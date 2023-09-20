@@ -10,47 +10,47 @@
  */
 int main (int argc, char **argv, char **enviroment)
 {
-    int status_int = 0, i;
-    int *exit_st = &status_int;
-    char *command = NULL; 
-    char **command_arg = NULL, **commands = NULL;
-    _path *now;
+	int status_int = 0, i;
+	int *exit_st = &status_int;
+	char *command = NULL;
+	char **command_arg = NULL, **commands = NULL;
+	_path *now;
 
-    if (_intractive_checker(argc) == 2 || _intractive_checker(argc) == 0)
-        commands = commands_getter(argv[0], argv[1], argc);
-    now = extract_directories();
-    i = 1;
-    while (++i)
-    {
-        if (_intractive_checker(argc) == 2 || _intractive_checker(argc) == 0)
-        {
-            if (commands[i - 1] != NULL)
-            command = commands[i - 1];
-            else
-            {
-                free(commands);
-                break;
-            }
-        }
-        if (_intractive_checker(argc) == 1)
-        {
-            _putchar('$');
-            _putchar(' ');
-            command = command_getter(now);
-        }
-        if (command == NULL)
-            continue;
-        command_arg = command_arg_getter(command, *exit_st);
-        if (!command_arg)
-        {
-            free(command);
-            continue;
-        }
-        command_excuter(command_arg, enviroment, exit_st, now, argv);
-        free_command(command, command_arg);
-    }
-    free_list(now);
-    exit(*exit_st);
+	if (_intractive_checker(argc) == 2 || _intractive_checker(argc) == 0)
+		commands = commands_getter(argv[0], argv[1], argc);
+	now = extract_directories();
+	i = 1;
+	while (++i)
+	{
+		if (_intractive_checker(argc) == 2 || _intractive_checker(argc) == 0)
+		{
+			if (commands[i - 1] != NULL)
+			command = commands[i - 1];
+			else
+			{
+				free(commands);
+				break;
+			}
+		}
+		if (_intractive_checker(argc) == 1)
+		{
+			_putchar('$');
+			_putchar(' ');
+			command = command_getter(now);
+		}
+		if (command == NULL)
+			continue;
+		command_arg = command_arg_getter(command, *exit_st);
+		if (!command_arg)
+		{
+			free(command);
+			continue;
+		}
+		command_excuter(command_arg, enviroment, exit_st, now, argv);
+		free_command(command, command_arg);
+	}
+	free_list(now);
+	exit(*exit_st);
 }
 
 /**
@@ -62,19 +62,19 @@ int main (int argc, char **argv, char **enviroment)
  */
 int _intractive_checker (int argc)
 {
-    int mode;
-    if (argc == 1)
-    {
-        mode = isatty(STDIN_FILENO);
-        if (mode)
-        return (1);
-        else
-        return (2);
-    }
-    else if (argc > 1)
-    return (0);
+	int mode;
+	if (argc == 1)
+	{
+		mode = isatty(STDIN_FILENO);
+		if (mode)
+		return (1);
+		else
+		return (2);
+	}
+	else if (argc > 1)
+	return (0);
 
-    return (-1);
+	return (-1);
 }
 /**
  * free_command - to avoid memory leaks

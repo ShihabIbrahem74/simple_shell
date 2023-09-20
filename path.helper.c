@@ -45,11 +45,11 @@ _path *add_node(_path **head, const char *str)
 		return (NULL);
 	}
 	new->path = strdup(str);
-    if (new->path == NULL)
-    {
-        free(new);
-        return (NULL);
-    }
+	if (new->path == NULL)
+	{
+		free(new);
+		return (NULL);
+	}
 	new->length = _strlen((char *)str);
 	new->next = *head;
 	*head = new;
