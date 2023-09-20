@@ -7,7 +7,7 @@
  * @argc: the number of arguments
  * Return: 0 on success
  */
-char **commands_getter(char *prog, char *file, int argc)
+char **commands_getter(int argc, char *file, char *prog)
 {
 	int active;
 	char **commands;
@@ -109,12 +109,13 @@ char **command_maker2(char *data)
 {
 	unsigned int i = 0, char_count = 0, x = 0;
 	char *first_data, *command, **commands = NULL;
+	char *data_temp = _strdup(data);
 
-	while (*data != '\0')
+	while (*data_temp != '\0')
 	{
-		if (*data == '\n')
+		if (*data_temp == '\n')
 		x++;
-		data++;
+		data_temp++;
 	}
 	char_count = x + 1;
 	commands = (char **)malloc(sizeof(char *) * (char_count + 1));

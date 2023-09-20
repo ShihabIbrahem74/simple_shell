@@ -8,7 +8,7 @@
  *
  * Return: 0 on success
  */
-int main(int argc, char **argv, char **enviroment)
+int main(int argc, char *argv[], char *enviroment[])
 {
 	int status_int = 0, i, *exit_st = &status_int;
 	char *command = NULL;
@@ -16,9 +16,9 @@ int main(int argc, char **argv, char **enviroment)
 	_path *now;
 
 	if (_intractive_checker(argc) == 2 || _intractive_checker(argc) == 0)
-		commands = commands_getter(argv[0], argv[1], argc);
+		commands = commands_getter(argc, argv[1], argv[0]);
 	now = extract_directories();
-	i = 1;
+	i = 0;
 	while (++i)
 	{
 		if (_intractive_checker(argc) == 2 || _intractive_checker(argc) == 0)

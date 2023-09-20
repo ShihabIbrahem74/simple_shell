@@ -41,7 +41,7 @@ void free_list(_path *head);
 char **command_arg_getter(char *command, int exit_st);
 char *command_maker(char *first_com, char *command,
 		char **com_arg, int exit_st);
-char **commands_getter(char *prog, char *file, int argc);
+char **commands_getter(int argc, char *file, char *prog);
 int _strcmp(char *s1, char *s2);
 char *itos(int pid);
 void error_handler(char **command_arg, char **enviroment,
