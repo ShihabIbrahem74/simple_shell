@@ -204,7 +204,7 @@ void error_handler(char **command_arg, char **enviroment, int *exit_st, _path *n
     char *path_new;
     pid_t id;
 
-    path_new = check_access(command_arg[0], now);
+    path_new = access_checker(command_arg[0], now);
     if (path_new)
     {
         id = fork();
@@ -238,41 +238,4 @@ void error_handler(char **command_arg, char **enviroment, int *exit_st, _path *n
             *exit_st = 127;
         }
     }
-}
-
-char *check_access(char *line_av_1, _path *current)
-{
-	char *full_path;
-	int found = 0, len;
-
-	if (current == NULL)
-		return (NULL);
-	while (current)
-	{
-		len = strlen(current->path) + _strlen(line_av_1) + 2;
-		/* to calculate the length of the full path*/
-		if (len > 1024)
-		{
-			write(STDERR_FILENO, "ERROR: Path too long\n", 21);
-			continue;
-		}
-		full_path = (char *)malloc(len * sizeof(char));
-		strcpy(full_path, current->path);
-		strcat(full_path, "/");
-		strcat(full_path, line_av_1);
-		if (access(full_path, X_OK) == 0)
-		{
-			found = 1;
-			break;
-		}
-		else
-			free(full_path);
-
-		current = current->next;
-	}
-	if (found)
-		return (full_path);
-
-	else
-		return (NULL);
 }

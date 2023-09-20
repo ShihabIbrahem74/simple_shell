@@ -25,7 +25,7 @@ _path *extract_directories()
         return (NULL);
     }
     first_path = strtok(temp, ":");
-    while (temp)
+    while (first_path)
     {
         add_node(&path_list, first_path);
         first_path = strtok(NULL, ":");

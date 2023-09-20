@@ -10,30 +10,36 @@
  */
 int main (int argc, char **argv, char **enviroment)
 {
-    int active, status_int = 0, i;
+    int status_int = 0, i;
     int *exit_st = &status_int;
     char *command = NULL; 
-    char **command_arg = NULL; /**commands = NULL*/
+    char **command_arg = NULL, **commands = NULL;
     _path *now;
 
-    active = _intractive_checker(argc);
-    /*if (active == 2 || active == 0)
-    {
-        commands = commands_getter(active, argv[0], argv[1])
-    }*/
+    if (_intractive_checker(argc) == 2 || _intractive_checker(argc) == 0)
+        commands = commands_getter(argv[0], argv[1], argc);
     now = extract_directories();
     i = 1;
     while (++i)
     {
-        if (active == 1)
+        if (_intractive_checker(argc) == 2 || _intractive_checker(argc) == 0)
+        {
+            if (commands[i - 1] != NULL)
+            command = commands[i - 1];
+            else
+            {
+                free(commands);
+                break;
+            }
+        }
+        if (_intractive_checker(argc) == 1)
         {
             _putchar('$');
+            _putchar(' ');
             command = command_getter(now);
         }
         if (command == NULL)
-        {
             continue;
-        }
         command_arg = command_arg_getter(command, *exit_st);
         if (!command_arg)
         {
@@ -41,6 +47,7 @@ int main (int argc, char **argv, char **enviroment)
             continue;
         }
         command_excuter(command_arg, enviroment, exit_st, now, argv);
+        free_command(command, command_arg);
     }
     free_list(now);
     exit(*exit_st);
@@ -68,4 +75,16 @@ int _intractive_checker (int argc)
     return (0);
 
     return (-1);
+}
+/**
+ * free_command - to avoid memory leaks
+ * Description: for alx project simple shell
+ * @command: command
+ * @commands: commands with arguments
+ * Return: void
+ */
+void free_command(char *command, char **command_arg)
+{
+free(command_arg);
+free(command);
 }

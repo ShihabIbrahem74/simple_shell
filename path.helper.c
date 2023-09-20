@@ -79,3 +79,49 @@ void free_list(_path *head)
 	free(buffer->path);
 	free(buffer);
 }
+
+/**
+ * access_checker - function that free list
+ * Description: for alx simple shell project
+ * @head: an argument
+ * Return: 0 always
+*/
+
+char *access_checker(char *command_arg1, _path *now)
+{
+	int length, counter, flag;
+	char *f_path;
+
+	counter = 0;
+	if (!now)
+	{
+		return (NULL);
+	}
+	while (now != NULL)
+	{
+		length = _strlen(now->path) + _strlen(command_arg1) + 2;
+		if (length > 1024)
+		{
+			write(STDERR_FILENO, "ERROR: Path Too Long\n", 21);
+			continue;
+		}
+		f_path = (char *)malloc(sizeof(char) *length);
+		_strcpy(f_path, now->path);
+		_strcat(f_path, "/");
+		_strcat(f_path, command_arg1);
+		flag = access(f_path, X_OK);
+		if (flag == 0)
+		{
+			counter = 1;
+			break;
+		}
+		else
+		{
+			free(f_path);
+		}
+		now = now->next;
+	}
+	if (counter == 1)
+		return (f_path);
+	return (NULL);
+}
