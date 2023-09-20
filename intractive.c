@@ -42,10 +42,15 @@ char *command_getter(_path *now)
 /**
  * command_excuter - code for excute commands in shell
  * Description: for alx project simple shell
- * @command: the command passed
+ * @command_arg: command arg
+ * @enviroment: env
+ * @exit_st: exit
+ * @now: now
+ * @argv: argv
  * Return: the command
  */
-void command_excuter(char **command_arg, char **enviroment, int *exit_st, _path *now, char **argv)
+void command_excuter(char **command_arg, char **enviroment,
+		int *exit_st, _path *now, char **argv)
 {
 	pid_t id;
 
@@ -82,8 +87,7 @@ void command_excuter(char **command_arg, char **enviroment, int *exit_st, _path 
  */
 char **command_arg_getter(char *command, int exit_st)
 {
-	char *temp, *first_com, *f_command, *x;
-	char **com_arg;
+	char *temp, *first_com, *f_command, *x, **com_arg;
 	pid_t pid;
 	int spaces, i = 0, flag1, flag2;
 
@@ -91,7 +95,7 @@ char **command_arg_getter(char *command, int exit_st)
 	if (!temp)
 	return (NULL);
 	spaces = letter_counter(temp, ' ');
-	com_arg = malloc (sizeof (char *) *(spaces + 1));
+	com_arg = malloc(sizeof(char *) * (spaces + 1));
 	if (!com_arg)
 	{
 		free(com_arg);
@@ -127,9 +131,7 @@ char **command_arg_getter(char *command, int exit_st)
 				{
 					x = getenv(&first_com[1]);
 					if (!x)
-					{
 						f_command = _strdup("");
-					}
 					else
 						f_command = _strdup(x);
 				}
@@ -152,7 +154,8 @@ char **command_arg_getter(char *command, int exit_st)
  * @exit_st: the exit status;
  * Return: the command
  */
-char *command_maker(char *first_com, char *command, char **com_arg, int exit_st)
+char *command_maker(char *first_com, char *command,
+		char **com_arg, int exit_st)
 {
 	char *temp = command, *pid_str, *x;
 	pid_t pid;
@@ -193,13 +196,16 @@ char *command_maker(char *first_com, char *command, char **com_arg, int exit_st)
 /**
  * error_handler - process the command for excution
  * Description: for alx project simple shell
- * @first_com: the first part of the command
- * @command: the command passed
- * @com_arg: the commands with arguments
+ * @command_arg: command
+ * @enviroment: environment
+ * @exit_st: exitt
+ * @now: n
+ * @argv: argv
  * @exit_st: the exit status;
  * Return: the command
  */
-void error_handler(char **command_arg, char **enviroment, int *exit_st, _path *now, char **argv)
+void error_handler(char **command_arg, char **enviroment,
+		int *exit_st, _path *now, char **argv)
 {
 	char *path_new;
 	pid_t id;
@@ -211,7 +217,7 @@ void error_handler(char **command_arg, char **enviroment, int *exit_st, _path *n
 		if (id == -1)
 		{
 			perror("fork");
-			exit (1);
+			exit(1);
 		}
 		if (id == 0)
 		{
@@ -227,14 +233,14 @@ void error_handler(char **command_arg, char **enviroment, int *exit_st, _path *n
 	}
 	else
 	{
-		if(access(command_arg[0], F_OK) == 0)
+		if (access(command_arg[0], F_OK) == 0)
 		{
 			printf("error\n");
 			*exit_st = 126;
 		}
 		else
 		{
-			printf("error 2%s\n",argv[0]);
+			printf("error 2%s\n", argv[0]);
 			*exit_st = 127;
 		}
 	}

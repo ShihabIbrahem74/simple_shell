@@ -37,7 +37,7 @@ char **pipe_getter()
 	if (flag == 0)
 	return (NULL);
 	chara = _strlen(buffer);
-	data = (char *)malloc(sizeof(char) *(chara + 1));
+	data = (char *)malloc(sizeof(char) * (chara + 1));
 	if (data)
 	{
 		_strcpy(data, buffer);

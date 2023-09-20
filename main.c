@@ -8,10 +8,9 @@
  *
  * Return: 0 on success
  */
-int main (int argc, char **argv, char **enviroment)
+int main(int argc, char **argv, char **enviroment)
 {
-	int status_int = 0, i;
-	int *exit_st = &status_int;
+	int status_int = 0, i, *exit_st = &status_int;
 	char *command = NULL;
 	char **command_arg = NULL, **commands = NULL;
 	_path *now;
@@ -60,9 +59,10 @@ int main (int argc, char **argv, char **enviroment)
  *
  * Return: integer based on mode
  */
-int _intractive_checker (int argc)
+int _intractive_checker(int argc)
 {
 	int mode;
+
 	if (argc == 1)
 	{
 		mode = isatty(STDIN_FILENO);
@@ -80,7 +80,7 @@ int _intractive_checker (int argc)
  * free_command - to avoid memory leaks
  * Description: for alx project simple shell
  * @command: command
- * @commands: commands with arguments
+ * @command_arg: commands with arguments
  * Return: void
  */
 void free_command(char *command, char **command_arg)

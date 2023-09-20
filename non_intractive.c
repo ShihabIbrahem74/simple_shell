@@ -47,7 +47,7 @@ char **file_getter(char *prog, char *file)
 		commands = file_getter_helper(file_st, prog, data, bytes);
 		if (!commands)
 		{
-			free (commands);
+			free(commands);
 			return (NULL);
 		}
 		return (commands);
@@ -63,13 +63,13 @@ char **file_getter(char *prog, char *file)
  * file_getter_helper - to get command for nonintractive mode
  * Description: for alx project simple shell
  * @file_st: file statues
- * @fd: file describtor
  * @prog: the program name
  * @data: file's data
  * @bytes: number of bytes written inside the file
  * Return: 0 on success
  */
-char **file_getter_helper(struct stat file_st, char *prog, char *data, size_t bytes)
+char **file_getter_helper(struct stat file_st, char *prog,
+		char *data, size_t bytes)
 {
 	int fd;
 	char **commands = NULL;
@@ -117,7 +117,7 @@ char **command_maker2(char *data)
 		data++;
 	}
 	char_count = x + 1;
-	commands = (char **)malloc(sizeof(char *) *(char_count + 1));
+	commands = (char **)malloc(sizeof(char *) * (char_count + 1));
 	first_data = strtok(data, "\n");
 	command = _strdup(first_data);
 	commands[i++] = command;
