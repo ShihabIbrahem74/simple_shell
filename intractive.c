@@ -87,9 +87,8 @@ void command_excuter(char **command_arg, char **enviroment,
  */
 char **command_arg_getter(char *command, int exit_st)
 {
-	char *temp, *first_com, *f_command, *x, **com_arg;
-	pid_t pid;
-	int spaces, i = 0, flag1, flag2;
+	char *temp, *first_com, **com_arg;
+	int spaces, i = 0;
 
 	temp = _strdup(command);
 	if (!temp)
@@ -107,39 +106,11 @@ char **command_arg_getter(char *command, int exit_st)
 	{
 		free(com_arg);
 		free(temp);
-		f_command = NULL;
 	}
 	else
 	{
-		f_command = command_maker(first_com, command, com_arg, exit_st);
-		com_arg[i++] = f_command;
-		while (first_com)
-		{
-			first_com = strtok(NULL, " \t\r\n\a\"");
-			if (first_com)
-			{
-				flag1 = _strcmp(first_com, "$$");
-				flag2 = _strcmp(first_com, "$?");
-				if (flag1 == 0)
-				{
-					pid = getpid();
-					f_command = itos(pid);
-				}
-				else if (flag2 == 0)
-					f_command = itos(exit_st);
-				else if (first_com[1] && first_com[0] == '$')
-				{
-					x = getenv(&first_com[1]);
-					if (!x)
-						f_command = _strdup("");
-					else
-						f_command = _strdup(x);
-				}
-				else
-					f_command = _strdup(first_com);
-				com_arg[i++] = f_command;
-			}
-		}
+		com_arg = intractive_error_hanlder(command, first_com,
+		com_arg, exit_st, &i);
 	}
 	com_arg[i] = NULL;
 	free(temp);
@@ -181,7 +152,7 @@ char *command_maker(char *first_com, char *command,
 		x = getenv(&first_com[1]);
 		if (!x)
 		{
-		   pid_str = _strdup("");
+			pid_str = _strdup("");
 		}
 		else
 		{

@@ -46,3 +46,53 @@ char **pipe_getter()
 	}
 	return (commands);
 }
+
+/**
+ * pipe_getter - to get command for nonintractive mode
+ * @command: the command line
+ * @first_com: the first come used with strtok
+ * @com_arg: the command with arguments
+ * @exit_st: handle the exit status
+ * @i: pointer to integer
+ * Description: for alx project simple shell
+ * Return: 0 on success
+ */
+char **intractive_error_hanlder(char *command, char *first_com,
+char **com_arg, int exit_st, int *i)
+{
+	char *x, *f_command;
+	int flag1, flag2;
+	pid_t pid;
+
+	f_command = command_maker(first_com, command, com_arg, exit_st);
+	com_arg[(*i)++] = f_command;
+	while (first_com)
+	{
+		first_com = strtok(NULL, " \t\r\n\a\"");
+		if (first_com)
+		{
+			flag1 = _strcmp(first_com, "$$");
+			flag2 = _strcmp(first_com, "$?");
+			if (flag1 == 0)
+			{
+				pid = getpid();
+				f_command = itos(pid);
+			}
+			else if (flag2 == 0)
+				f_command = itos(exit_st);
+			else if (first_com[1] && first_com[0] == '$')
+			{
+				x = getenv(&first_com[1]);
+				if (!x)
+				f_command = _strdup("");
+				else
+				f_command = _strdup(x);
+			}
+			else
+				f_command = _strdup(first_com);
+			com_arg[(*i)++] = f_command;
+		}
+	}
+
+	return (com_arg);
+}

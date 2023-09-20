@@ -55,4 +55,6 @@ char **command_maker2(char *data);
 void free_command(char *command, char **command_arg);
 char *_strcpy(char *dest, char *src);
 char *_strcat(char *dest, char *src);
+char **intractive_error_hanlder(char *command, char *first_com,
+char **com_arg, int exit_st, int *i);
 #endif
