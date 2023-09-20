@@ -57,4 +57,9 @@ char *_strcpy(char *dest, char *src);
 char *_strcat(char *dest, char *src);
 char **intractive_error_hanlder(char *command, char *first_com,
 char **com_arg, int exit_st, int *i);
+int f_e(char *command, char **com_arg, _path *now,
+		int i, int *exit_st, _path *enviroment, char **coammands);
+void envv(int *exit_st);
+void exitt(char *command, char **com_arg, _path *now,
+int i, int *exit_st, _path *enviroment, char **commands);
 #endif

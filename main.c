@@ -10,7 +10,7 @@
  */
 int main(int argc, char *argv[], char *enviroment[])
 {
-	int status_int = 0, i, *exit_st = &status_int;
+	int status_int = 0, i = 0, *exit_st = &status_int;
 	char *command = NULL;
 	char **command_arg = NULL, **commands = NULL;
 	_path *now;
@@ -18,7 +18,6 @@ int main(int argc, char *argv[], char *enviroment[])
 	if (_intractive_checker(argc) == 2 || _intractive_checker(argc) == 0)
 		commands = commands_getter(argc, argv[1], argv[0]);
 	now = extract_directories();
-	i = 0;
 	while (++i)
 	{
 		if (_intractive_checker(argc) == 2 || _intractive_checker(argc) == 0)
@@ -45,7 +44,8 @@ int main(int argc, char *argv[], char *enviroment[])
 			free(command);
 			continue;
 		}
-		command_excuter(command_arg, enviroment, exit_st, now, argv);
+		if (f_e(command, command_arg, now, i, exit_st, NULL, commands) != 0)
+			command_excuter(command_arg, enviroment, exit_st, now, argv);
 		free_command(command, command_arg);
 	}
 	free_list(now);
