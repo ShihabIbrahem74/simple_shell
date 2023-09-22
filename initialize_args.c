@@ -29,7 +29,7 @@ void initialize_args(_arg *arg, int argc, char **argv, char **env)
 		arg->fd = open(argv[1], O_RDONLY);
 		if (arg->fd == -1)
 		{
-			printf("%s: 0: cannot open %s: No Such File\n", argv[0], argv[1]);
+			printf("%s: 0: Can't open %s\n", argv[0], argv[1]);
 			exit(2);
 		}
 	}
