@@ -1,58 +1,5 @@
 #include "main.h"
 /**
- * _putchar - print character
- * Description: print a single character and send number of bytes written
- * @c: a signle char
- * Return: 1 on sucess
-*/
-
-int _putchar(char c)
-{
-	unsigned int i;
-
-	i = write(1, &c, 1);
-	return (i);
-}
-/**
- * _strlen - calulate the length of string
- * Description: for alx project simple shell
- * @s: '*s' is a pointer
- * Return: length of string
- */
-int _strlen(char *s)
-{
-	int length = 0;
-
-	while (s[length])
-	{
-		length++;
-	}
-	return (length);
-}
-/**
- * letter_counter - count how many c in str
- * Description: for alx project simple shell
- * @c: c is a special character
- * @str: is the string
- * Return: number of char in string
- */
-int letter_counter(char *str, char c)
-{
-	int counter = 0;
-
-	while (*str != '\0')
-	{
-		if (*(str + 1) == c && *str != c)
-		{
-			counter++;
-		}
-		str++;
-	}
-	counter++;
-	return (counter);
-}
-
-/**
  * _strcmp - compares strings
  * Description: for alx project simple shell
  * @s1: '*s1' is a pointer
@@ -76,37 +23,83 @@ else
 return (*s1 - *s2);
 }
 /**
- * itos - convert int to string
+ * _strlen - calulate the length of string
  * Description: for alx project simple shell
- * @pid: is the integer to be converted.
+ * @s: '*s' is a pointer
+ * Return: length of string
+ */
+int _strlen(char *s)
+{
+	int length = 0;
+
+	while (s[length])
+	{
+		length++;
+	}
+	return (length);
+}
+/**
+ * _strcat - fucntion that is mintioned in another code
+ * Description: function to do task for alx
+ * @dest: '*dest' is a pointer
+ * @src: '*src' is a pointer
  * Return: Always 0.
  */
-char *itos(int pid)
+char *_strcat(char *dest, char *src)
 {
-	int length, temp = pid;
-	char *str;
+int length1 = 0;
+int length2 = 0;
 
-	if (pid == 0)
-	length = 1;
-	else
-	{
-		for (length = 0; temp != 0; length++)
-			temp = temp / 10;
-	}
-	length++;
-	str = malloc(sizeof(char) * length);
-	if (!str)
-	{
-		free(str);
-		return (NULL);
-	}
-	length--;
-	str[length] = '\0';
-	while (length != 0)
-	{
-		length--;
-		str[length] = pid % 10 + '0';
-		pid = pid / 10;
-	}
-	return (str);
+while (dest[length1] != 0)
+length1++;
+while (src[length2] != 0)
+{
+dest[length1 + length2] = src[length2];
+length2++;
+}
+dest[length1 + length2] = '\0';
+return (dest);
+}
+/**
+ * _strncat - fucntion that is mintioned in another code
+ * Description: function to do task for alx
+ * @dest: '*dest' is a pointer
+ * @n: 'n' is an integer
+ * @src: '*src' is a pointer
+ * Return: Always 0.
+ */
+char *_strncat(char *dest, char *src, int n)
+{
+int length1 = 0;
+int length2 = 0;
+
+while (dest[length1] != 0)
+length1++;
+while (src[length2] != 0 && length2 < n)
+{
+dest[length1] = src[length2];
+length1++;
+length2++;
+}
+return (dest);
+}
+/**
+ * _strchr - fucntion that is mintioned in another code
+ * Description: function to do task for alx
+ * @s: '*s' is a pointer
+ * @c: 'n' is an integer
+ * Return: Always 0.
+ */
+char *_strchr(char *s, char c)
+{
+int i = 0;
+while (s[i] != 0)
+{
+if (s[i] == c)
+return (s + i);
+i++;
+}
+if (s[i] == c)
+	return (s + i);
+return ('\0');
 }

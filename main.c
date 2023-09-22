@@ -1,90 +1,33 @@
 #include "main.h"
 /**
- * main - entry point for the program
- * Description: for alx project simple shell
- * @argc: number of arguments
- * @argv: array of strings contains the arguments passed
- * @enviroment: array of strings contains env variables
- *
- * Return: 0 on success
- */
-int main(int argc, char *argv[], char *enviroment[])
+ * main - to help in simple shell
+ * Description: for simple shell task
+ * @argc: an argument
+ * @argv: an argument
+ * @env: an argument
+ * Return: 1 on sucess
+*/
+int main(int argc, char **argv, char **env)
 {
-	int status_int = 0, i = 0, *exit_st = &status_int;
-	char *command = NULL;
-	char **command_arg = NULL, **commands = NULL;
-	_path *now;
+int point = 1, dot = 0;
+_arg args;
 
-	if (_intractive_checker(argc) == 2 || _intractive_checker(argc) == 0)
-		commands = commands_getter(argc, argv[1], argv[0]);
-	now = extract_directories();
-	while (++i)
-	{
-		if (_intractive_checker(argc) == 2 || _intractive_checker(argc) == 0)
-		{
-			if (commands[i - 1] != NULL)
-			command = commands[i - 1];
-			else
-			{
-				free(commands);
-				break;
-			}
-		}
-		if (_intractive_checker(argc) == 1)
-		{
-			_putchar('$');
-			_putchar(' ');
-			command = command_getter(now);
-		}
-		if (command == NULL)
-			continue;
-		command_arg = command_arg_getter(command, *exit_st);
-		if (!command_arg)
-		{
-			free(command);
-			continue;
-		}
-		if (f_e(command, command_arg, now, i, exit_st, NULL, commands) != 0)
-			command_excuter(command_arg, enviroment, exit_st, now, argv);
-		free_command(command, command_arg);
-	}
-	free_list(now);
-	exit(*exit_st);
+	initialize_args(&args, argc, argv, env);
+while (1)
+{
+if (isatty(STDIN_FILENO) && point && !args.fd)
+{
+_putchar('$');
+_putchar(' ');
 }
-
-/**
- * _intractive_checker - check what mode is the program
- * Description: for alx project simple shell
- * @argc: number of arguments
- *
- * Return: integer based on mode
- */
-int _intractive_checker(int argc)
-{
-	int mode;
-
-	if (argc == 1)
-	{
-		mode = isatty(STDIN_FILENO);
-		if (mode)
-		return (1);
-		else
-		return (2);
-	}
-	else if (argc > 1)
-	return (0);
-
-	return (-1);
+signal(SIGINT, new_line);
+args.i++;
+point = command_getter(&args, point, &dot);
+if (input_helper(&args))
+continue;
+args.token = token_maker(args.command, " ");
+if (command_maker(&args) == 255)
+prog_exit(&args);
 }
-/**
- * free_command - to avoid memory leaks
- * Description: for alx project simple shell
- * @command: command
- * @command_arg: commands with arguments
- * Return: void
- */
-void free_command(char *command, char **command_arg)
-{
-free(command_arg);
-free(command);
+return (0);
 }

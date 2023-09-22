@@ -9,57 +9,74 @@
 #include <string.h>
 #include <sys/wait.h>
 #include <fcntl.h>
+#include <signal.h>
 
+#define init {0, 0, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL}
 /**
- * struct _path - for path handling
- * @length: string length
- * @path: string
- * @next: points to the next node
- *
+ * struct _arg - for arguments handling
+ * @token: an argument
+ * @exit_st: an argument
+ * @pid: an argument
+ * @fd: an argument
+ * @num_path: an argument
+ * @i: an argument
+ * @command: an argument
+ * @prog_name: an argument
+ * @path: an argument
+ * @old_path: an argument
+ * @pwd: an argument
+ * @env: an argument
  * Description: singly linked list node structure
  */
-typedef struct _path
+typedef struct _arg
 {
-	int length;
+	int token;
+	int exit_st;
+	int pid;
+	int fd;
+	int num_path;
+	int i;
+	char *command;
+	char *prog_name;
 	char *path;
-	struct _path *next;
-} _path;
+	char *old_path;
+	char **pwd;
+	char **env;
+} _arg;
 
-extern char **environ;
-
+void initialize_args(_arg *arg, int argc, char **argv, char **env);
 int _putchar(char c);
-int _intractive_checker(int argc);
-char *command_getter(_path *now);
-void command_excuter(char **command_arg, char **enviroment,
-		int *exit_st, _path *now, char **argv);
-_path *extract_directories();
-char *_strdup(char *str);
-int _strlen(char *s);
-_path *add_node(_path **head, const char *str);
-int letter_counter(char *str, char c);
-void free_list(_path *head);
-char **command_arg_getter(char *command, int exit_st);
-char *command_maker(char *first_com, char *command,
-		char **com_arg, int exit_st);
-char **commands_getter(int argc, char *file, char *prog);
+void new_line(int signal);
+int command_getter(_arg *arg, int point, int *dot);
+void input_exit(_arg *arg, int point);
+int token_maker(char *command, char *sign);
+char *_strtok(char *str, const char *sign);
 int _strcmp(char *s1, char *s2);
-char *itos(int pid);
-void error_handler(char **command_arg, char **enviroment,
-		int *exit_st, _path *now, char **argv);
-char *access_checker(char *command_arg1, _path *now);
-char **file_getter(char *prog, char *file);
-char **pipe_getter();
-char **file_getter_helper(struct stat file, char *prog,
-		char *data, size_t bytes);
-char **command_maker2(char *data);
-void free_command(char *command, char **command_arg);
-char *_strcpy(char *dest, char *src);
+int _strlen(char *s);
 char *_strcat(char *dest, char *src);
-char **intractive_error_hanlder(char *command, char *first_com,
-char **com_arg, int exit_st, int *i);
-int f_e(char *command, char **com_arg, _path *now,
-		int i, int *exit_st, _path *enviroment, char **coammands);
-void envv(int *exit_st);
-void exitt(char *command, char **com_arg, _path *now,
-int i, int *exit_st, _path *enviroment, char **commands);
+void prog_exit(_arg *arg);
+ssize_t line_getter(_arg *arg);
+char *realloc_handler(_arg *arg, char *temp, int *buff, int i, int m);
+void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
+char *_strncat(char *dest, char *src, int n);
+char *_strchr(char *s, char c);
+int input_helper(_arg *arg);
+void atos(char *str, int number);
+char *_env(char **enviroment, char *env, int length);
+int _strncmp(const char *str1, const char *str2, size_t n);
+void sign_handler(char *temp, char **sign, _arg *arg);
+void spacing(char **command, _arg *arg);
+void dotaizing(char **command, _arg *arg);
+int _atoi(char *s);
+int exit_func(_arg *arg);
+void pwd_ch(_arg *arg);
+int _cd(_arg *arg);
+int _env2(_arg *arg);
+int compare_backward(char *str1, char *str2);
+int _execve(_arg *arg, char *buffer);
+int command_maker(_arg *arg);
+char **pwd_getter(_arg *arg);
+char *_strdup(_arg *arg, char *str);
+
+
 #endif
