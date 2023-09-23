@@ -11,10 +11,9 @@
 #include <fcntl.h>
 #include <signal.h>
 
-#define init {0, 0, 0, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL}
+#define init {0, 0, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL}
 /**
  * struct _arg - for arguments handling
- * @env_c: follows environment changes
  * @token: an argument
  * @exit_st: an argument
  * @pid: an argument
@@ -31,7 +30,6 @@
  */
 typedef struct _arg
 {
-	int env_c;
 	int token;
 	int exit_st;
 	int pid;
